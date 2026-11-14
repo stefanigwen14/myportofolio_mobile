@@ -1,5 +1,6 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide TextTheme;
 import 'package:myportofolio_mobile/menu.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 void main() {
   runApp(const MyApp());
@@ -33,6 +34,7 @@ class MyApp extends StatelessWidget {
           seedColor: Colors.indigo,
           secondary: Colors.amber[700],
         ),
+        fontFamily: GoogleFonts.poppins().fontFamily,
         useMaterial3: true,
       ),
       home: MyHomePage(),
