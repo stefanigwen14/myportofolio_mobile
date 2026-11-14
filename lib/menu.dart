@@ -11,6 +11,9 @@ class MyHomePage extends StatelessWidget {
     ItemHomepage("Lihat Proyek", Icons.folder, Colors.blue),
     ItemHomepage("Tambah Proyek", Icons.add_circle, Colors.green),
     ItemHomepage("Logout", Icons.logout, Colors.red),
+    ItemHomepage("Lihat Pendidikan", Icons.school, const Color.fromARGB(255, 244, 247, 89)),
+    ItemHomepage("Lihat Pengalaman", Icons.newspaper, const Color.fromARGB(255, 198, 64, 255)),
+    ItemHomepage("Lihat Testimonial", Icons.mail, const Color.fromARGB(255, 255, 132, 160)),
   ];
 
   @override
@@ -18,17 +21,26 @@ class MyHomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     // Scaffold menyediakan struktur visual dasar halaman (AppBar, Body, SnackBar).
     return Scaffold(
+      backgroundColor: Color(0xFFFFF5EA),
       // AppBar menampilkan bar bagian atas halaman aplikasi.
       appBar: AppBar(
         title: const Text(
           'MyPortfolio',
-          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+          style: TextStyle(color: Color(0xFF574C45), fontWeight: FontWeight.w900),
         ),
         backgroundColor: Theme.of(context).colorScheme.primary,
+        shape: Border(
+          bottom: BorderSide(
+            color: Color(0xFFC89595),
+            width: 1,
+          )
+        ),
+        elevation: 2,
+        shadowColor: Color(0xFFC89595),
       ),
       // Body halaman utama dengan padding di sekelilingnya.
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16.0), 
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
@@ -55,6 +67,7 @@ class MyHomePage extends StatelessWidget {
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 18.0,
+                        color: Color(0xFF574C45),
                       ),
                     ),
                   ),
