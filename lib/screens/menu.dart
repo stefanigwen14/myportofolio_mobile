@@ -24,7 +24,6 @@ class MyHomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     // Scaffold menyediakan struktur visual dasar halaman (AppBar, Body, SnackBar).
     return Scaffold(
-      backgroundColor: Color(0xFFFFF5EA),
       // AppBar menampilkan bar bagian atas halaman aplikasi.
       appBar: AppBar(
         title: const Text(

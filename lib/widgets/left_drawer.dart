@@ -12,7 +12,7 @@ class LeftDrawer extends StatelessWidget {
       child: ListView(
         children: [
           const DrawerHeader(
-            decoration: BoxDecoration(color: Colors.indigo),
+            decoration: BoxDecoration(color: Color(0xFFDDBEBE)),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -21,13 +21,13 @@ class LeftDrawer extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 30,
                     fontWeight: FontWeight.bold,
-                    color: Colors.white,
+                    color: Color(0xFF574C45),
                   ),
                 ),
                 SizedBox(height: 10),
                 Text(
                   'Explore personal projects and experiences!',
-                  style: TextStyle(fontSize: 15, color: Colors.white),
+                  style: TextStyle(fontSize: 15, color: Color(0xFF574C45)),
                 ),
               ],
             ),
