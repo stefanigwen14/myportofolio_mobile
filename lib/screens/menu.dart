@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:myportofolio_mobile/widgets/left_drawer.dart';
-import 'package:myportofolio_mobile/widgets/project_card.dart';
+import 'package:myportofolio_mobile/widgets/menu_card.dart';
 
 class MyHomePage extends StatelessWidget {
   MyHomePage({super.key});
@@ -13,9 +13,10 @@ class MyHomePage extends StatelessWidget {
     ItemHomepage("Lihat Proyek", Icons.folder, Colors.blue),
     ItemHomepage("Tambah Proyek", Icons.add_circle, Colors.green),
     ItemHomepage("Logout", Icons.logout, Colors.red),
+    ItemHomepage("Lihat Testimonial", Icons.mail, const Color.fromARGB(255, 255, 132, 160)),
+    ItemHomepage("Tambah Testimonial", Icons.add_circle, const Color.fromARGB(255, 166, 52, 78)),
     ItemHomepage("Lihat Pendidikan", Icons.school, const Color.fromARGB(255, 244, 247, 89)),
     ItemHomepage("Lihat Pengalaman", Icons.newspaper, const Color.fromARGB(255, 198, 64, 255)),
-    ItemHomepage("Lihat Testimonial", Icons.mail, const Color.fromARGB(255, 255, 132, 160)),
   ];
 
   @override
@@ -23,7 +24,6 @@ class MyHomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     // Scaffold menyediakan struktur visual dasar halaman (AppBar, Body, SnackBar).
     return Scaffold(
-      backgroundColor: Color(0xFFFFF5EA),
       // AppBar menampilkan bar bagian atas halaman aplikasi.
       appBar: AppBar(
         title: const Text(
