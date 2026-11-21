@@ -13,6 +13,7 @@ Project **My Portofolio Mobile** merupakan project aplikasi portofolio pribadi (
 - 📲 [Penjelasan Fitur](https://github.com/stefanigwen14/myportofolio_mobile#-penjelasan-fitur)
 - ❓ [Pertanyaan Refleksi & AI Disclosure](https://github.com/stefanigwen14/myportofolio_mobile#-pertanyaan-refleksi--ai-disclosure)
      * [Tugas 7](https://github.com/stefanigwen14/myportofolio_mobile#tugas-7)
+     * [Tugas 8](https://github.com/stefanigwen14/myportofolio_mobile#tugas-8)
 
 ## ⚙️ Instruksi Setup
 1. Lakukan instalasi [Flutter SDK (lihat panduan instalasi di sini)](https://flutter.dev/docs/get-started/install)
@@ -70,3 +71,25 @@ Bagian ini akan diperbarui seiring waktu pengembangan. Untuk sekarang, fitur yan
 - **AI Disclosure:**
 
   Untuk tugas 7 ini, saya dibantu oleh [Gemini (lihat log chat di sini)](https://share.gemini.google/0V1baKg0IDKF). Gemini membantu saya dalam memahami hal yang sudah ada pada kode saya tetapi belum saya pahami dari Tutorial 8 (seperti cara kerja GridView), memperjelas apa yang sudah saya baca dari dokumentasi tetapi belum paham (cara mengganti font utama aplikasi dari Google Fonts dan format hex code warna), serta memberitahu apa yang harus dilakukan untuk menambahkan outline border dan shadow untuk AppBar. Strategi prompting yang saya gunakan adalah dengan menanyakan langsung hal yang masih saya bingungkan dari Tutorial/Dokumentasi lalu Gemini akan memberikan penjelasan, setelah penjelasan diberikan dan masih belum berhasil (salah satu kekurangan AI adalah jawaban kurang oke jika kurang konteks), saya harus memberi konteks tambahan dari sepotong kode saya serta apa yang muncul di IDE saya ketika error, ketika masih tidak bisa saya meminta Gemini untuk memberikan implementasi alternatif hal tersebut sampai berhasil.
+
+### Tugas 8
+
+**1. Jelaskan perbedaan antara Navigator.push(), Navigator.pushReplacement(), dan Navigator.pop(). Metode apa yang digunakan untuk membuka formulir dari kartu aksi Jelaskan juga bagaimana opsi Home di drawer membawa pengguna kembali ke halaman utama.** 
+
+Suatu aplikasi Flutter memiliki suatu stack untuk halaman yang dikelola oleh navigator. Navigator.push() menambah halaman baru ke stack di atas halaman sekarang sehingga ketika di-back akan kembali ke halaman sebelumnya, Navigator.pushReplacement() mengganti halaman sekarang dengan halaman baru sehingga ketika di-back tidak bisa kembali ke halaman yang diganti, sementara Navigator.pop() menutup halaman paling atas, yakni aksi back itu sendiri. Metode yang digunakan untuk membuka formulir dari kartu aksi adalah Navigator.push() sehingga ketika di-back (jika dibuka dari halaman utama, tempat kartu aksi berada) akan kembali ke halaman utama. Opsi Home di drawer menggunakan Navigator.pushReplacement() sehingga akan mengganti halaman apapun yang sedang aktif dengan Home langsung, dan tidak bisa back ke halaman sebelumnya.
+    
+**2. Bagaimana susunan Scaffold, AppBar, dan Drawer membantu menjaga struktur halaman tetap konsisten? Berikan satu contoh penggunaan warna tema portofolio di lebih dari satu halaman.**
+
+Pada setiap halaman, susunannya adalah Scaffold yang isinya dimulai dengan AppBar dan Drawer sehingga struktur halaman tersebut tetap konsisten. Drawer dipanggil dari widget pada left_drawer.dart karena semua halaman pasti memiliki left drawer dengan konten yang sama sehingga widget tersebut dipisahkan dalam satu file tersendiri dan dipanggil di setiap Scaffold halaman di bawah AppBar supaya reusable dan konsisten. Contoh penggunaan warna tema portofolio di lebih dari satu halaman adalah di main.dart saya mendefinikan 0xFFDDBEBE sebagai primary color di color scheme dan saya panggil warna tersebut melalui Theme.of(context).colorScheme.primary sebagai background color dari AppBar di setiap halaman supaya tetap konsisten.
+
+**3. Mengapa tata letak tersebut dipilih untuk formulir? Jelaskan peran widget pengatur jarak dan widget penggulir ketika ruang layar terbatas.**
+
+Tata letak formulir dipilih berupa Column dengan childrennya berupa padding (widget pengatur jarak) untuk mengatur jarak di dalam widget itu sendiri antara border dan isi. Widget penggulir (scroll) berupa SingleChildScrollView dipilih supaya Column bisa discroll seandainya ruang layar terbatas.
+
+**4. Apa peran GlobalKey<FormState>, validator, dan validate() saat tombol Simpan ditekan? Berikan satu contoh nilai yang ditolak oleh validasi dan jelaskan mengapa memilih jenis input atau papan ketik saja belum cukup.**
+
+GlobalKey<FormState> berperan sebagai penanda dari widget Form yang akan di-save oleh tombol Simpan supaya statenya tetap bisa diakses di luar form. Validator merupakan fungsi di setiap field yang berfungsi untuk memvalidasi apakah masukan valid dan mengembalikan String berupa pesan error apabila memenuhi kondisi tidak valid, null kalau valid. validate() dipanggil lewat key dan akan menjalankan semua validator di dalam Form.
+Contoh: Pada field "Pengirim" di form testimonial saya, saya menambahkan fungsi validator yang akan me-return nama pengirim tidak boleh kosong (jika kosong) atau nama pengirim tidak boleh lebih dari 30 karakter. Hal ini dikarenakan untuk jenis input yang sama (TextField) bisa memiliki aturan validasi berbeda-beda, khusus field Pengirim saya memiliki aturan maks 30 karakter (berbeda dengan Pesan), sehingga perlu dibuat fungsi validator.
+
+- **AI Disclosure**:
+  Untuk tugas 8 ini, saya dibantu oleh [Claude (lihat log chat di sini)](https://claude.ai/share/f80bb015-ddd0-42b0-91b1-036b86a686ff) untuk bagian validasi input link URL gambar untuk form testimonial. Saya melakukan prompting dengan memberikan ide implementasi awal saya dan Claude memberitahu apa yang harus saya perbaiki. Claude membantu membuat RegExp untuk memastikan format link tautan gambar yang diupload harus valid. Response Claude masih memberikan terlalu banyak opsi dan response awal terlalu "general" untuk implementasi yang ingin saya pakai, jadi saya prompting ulang sehingga response sesuai dengan yang saya inginkan. 
