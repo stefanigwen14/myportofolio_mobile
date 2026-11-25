@@ -13,10 +13,26 @@ class MyHomePage extends StatelessWidget {
     ItemHomepage("Lihat Proyek", Icons.folder, Colors.blue),
     ItemHomepage("Tambah Proyek", Icons.add_circle, Colors.green),
     ItemHomepage("Logout", Icons.logout, Colors.red),
-    ItemHomepage("Lihat Testimonial", Icons.mail, const Color.fromARGB(255, 255, 132, 160)),
-    ItemHomepage("Tambah Testimonial", Icons.add_circle, const Color.fromARGB(255, 166, 52, 78)),
-    ItemHomepage("Lihat Pendidikan", Icons.school, const Color.fromARGB(255, 244, 247, 89)),
-    ItemHomepage("Lihat Pengalaman", Icons.newspaper, const Color.fromARGB(255, 198, 64, 255)),
+    ItemHomepage(
+      "Lihat Testimonial",
+      Icons.mail,
+      const Color.fromARGB(255, 255, 132, 160),
+    ),
+    ItemHomepage(
+      "Tambah Testimonial",
+      Icons.add_circle,
+      const Color.fromARGB(255, 166, 52, 78),
+    ),
+    ItemHomepage(
+      "Lihat Pendidikan",
+      Icons.school,
+      const Color.fromARGB(255, 244, 247, 89),
+    ),
+    ItemHomepage(
+      "Lihat Pengalaman",
+      Icons.newspaper,
+      const Color.fromARGB(255, 198, 64, 255),
+    ),
   ];
 
   @override
@@ -28,22 +44,20 @@ class MyHomePage extends StatelessWidget {
       appBar: AppBar(
         title: const Text(
           'MyPortfolio',
-          style: TextStyle(color: Color(0xFF574C45), fontWeight: FontWeight.w900),
+          style: TextStyle(
+            color: Color(0xFF574C45),
+            fontWeight: FontWeight.w900,
+          ),
         ),
         backgroundColor: Theme.of(context).colorScheme.primary,
-        shape: Border(
-          bottom: BorderSide(
-            color: Color(0xFFC89595),
-            width: 1,
-          )
-        ),
+        shape: Border(bottom: BorderSide(color: Color(0xFFC89595), width: 1)),
         elevation: 2,
         shadowColor: Color(0xFFC89595),
       ),
       drawer: const LeftDrawer(),
       // Body halaman utama dengan padding di sekelilingnya.
       body: Padding(
-        padding: const EdgeInsets.all(16.0), 
+        padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [

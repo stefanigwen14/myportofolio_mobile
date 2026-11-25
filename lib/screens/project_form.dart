@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:myportofolio_mobile/models/project.dart';
+import 'package:myportofolio_mobile/services/api_client.dart';
+import 'package:myportofolio_mobile/services/auth_state.dart';
+import 'package:myportofolio_mobile/widgets/auth_guard.dart';
 import 'package:myportofolio_mobile/widgets/left_drawer.dart';
+import 'package:provider/provider.dart';
 
 class ProjectFormPage extends StatefulWidget {
   const ProjectFormPage({super.key});
@@ -16,6 +21,7 @@ class _ProjectFormPageState extends State<ProjectFormPage> {
   String _category = "Web Development"; // default
   String _technologies = "";
   String _projectLink = "";
+  bool _isSubmitting = false;
 
   final List<String> _categories = [
     'Web Development',
@@ -24,6 +30,88 @@ class _ProjectFormPageState extends State<ProjectFormPage> {
     'Data Science',
     'Other',
   ];
+
+  Future<void> _submit() async {
+    if (!_formKey.currentState!.validate()) return;
+    _formKey.currentState!.save();
+
+    final loggedIn = await ensureLoggedIn(context);
+    if (!mounted || !loggedIn) return;
+
+    final token = context.read<AuthState>().token;
+    if (token == null || token.isEmpty) return;
+
+    setState(() {
+      _isSubmitting = true;
+    });
+
+    final newProject = Project(
+      title: _projectName.trim(),
+      description: _description.trim(),
+      techStack: _technologies.trim(),
+      projectUrl: _projectLink.trim(),
+    );
+
+    try {
+      final created = await context.read<ApiClient>().createProject(
+        newProject,
+        token: token,
+      );
+      if (!mounted) return;
+
+      await showDialog<void>(
+        context: context,
+        builder: (dialogContext) {
+          return AlertDialog(
+            title: const Text('Proyek berhasil ditambahkan!'),
+            content: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text('Title: ${created.title}'),
+                  Text('Description: ${created.description}'),
+                  Text('Tech Stack: ${created.techStack}'),
+                  Text('Project URL: ${created.projectUrl}'),
+                  if (created.projectImageUrl.isNotEmpty)
+                    Text('Image URL: ${created.projectImageUrl}'),
+                ],
+              ),
+            ),
+            actions: [
+              TextButton(
+                child: const Text('OK'),
+                onPressed: () {
+                  Navigator.pop(dialogContext);
+                  _formKey.currentState!.reset();
+                },
+              ),
+            ],
+          );
+        },
+      );
+    } on ApiException catch (e) {
+      if (!mounted) return;
+
+      if (e.statusCode == 401) {
+        await context.read<AuthState>().logout();
+        if (!mounted) return;
+
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text("Harap login untuk menambah proyek")),
+        );
+      } else {
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(const SnackBar(content: Text("Gagal menambah proyek")));
+      }
+    } finally {
+      if (mounted) {
+        setState(() {
+          _isSubmitting = false;
+        });
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -169,46 +257,17 @@ class _ProjectFormPageState extends State<ProjectFormPage> {
                   padding: const EdgeInsets.all(8.0),
                   child: ElevatedButton(
                     style: ButtonStyle(
-                      backgroundColor:
-                          WidgetStateProperty.all(Theme.of(context).colorScheme.secondary),
+                      backgroundColor: WidgetStateProperty.all(
+                        Theme.of(context).colorScheme.secondary,
+                      ),
                     ),
-                    onPressed: () {
-                      if (_formKey.currentState!.validate()) {
-                        showDialog(
-                          context: context,
-                          builder: (context) {
-                            return AlertDialog(
-                              title: const Text('Proyek berhasil ditambahkan!'),
-                              content: SingleChildScrollView(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text('Nama Proyek: $_projectName'),
-                                    Text('Deskripsi: $_description'),
-                                    Text('Kategori: $_category'),
-                                    Text('Teknologi: $_technologies'),
-                                    Text('Tautan: $_projectLink'),
-                                  ],
-                                ),
-                              ),
-                              actions: [
-                                TextButton(
-                                  child: const Text('OK'),
-                                  onPressed: () {
-                                    Navigator.pop(context);
-                                    _formKey.currentState!.reset();
-                                  },
-                                ),
-                              ],
-                            );
-                          },
-                        );
-                      }
-                    },
-                    child: const Text(
-                      "Save",
-                      style: TextStyle(color: Colors.white),
-                    ),
+                    onPressed: _isSubmitting ? null : _submit,
+                    child: _isSubmitting
+                        ? const SizedBox()
+                        : const Text(
+                            "Save",
+                            style: TextStyle(color: Colors.white),
+                          ),
                   ),
                 ),
               ),
