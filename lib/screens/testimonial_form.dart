@@ -31,15 +31,13 @@ class _TestimonialFormPageState extends State<TestimonialFormPage> {
       appBar: AppBar(
         title: const Text(
           'Add Testimonial',
-          style: TextStyle(color: Color(0xFF574C45), fontWeight: FontWeight.w900),
+          style: TextStyle(
+            color: Color(0xFF574C45),
+            fontWeight: FontWeight.w900,
+          ),
         ),
         backgroundColor: Theme.of(context).colorScheme.primary,
-        shape: Border(
-          bottom: BorderSide(
-            color: Color(0xFFC89595),
-            width: 1,
-          )
-        ),
+        shape: Border(bottom: BorderSide(color: Color(0xFFC89595), width: 1)),
         elevation: 2,
         shadowColor: Color(0xFFC89595),
       ),
@@ -101,7 +99,7 @@ class _TestimonialFormPageState extends State<TestimonialFormPage> {
                   },
                 ),
               ),
-          
+
               // === Sender Name ===
               Padding(
                 padding: const EdgeInsets.all(8.0),
@@ -143,7 +141,9 @@ class _TestimonialFormPageState extends State<TestimonialFormPage> {
                     ),
                   ),
                   validator: (String? value) {
-                    if(value != null && value.trim().isNotEmpty && !format.hasMatch(value.trim())) {
+                    if (value != null &&
+                        value.trim().isNotEmpty &&
+                        !format.hasMatch(value.trim())) {
                       return "Format link harus berupa https://drive.google.com/thumbnail?id=FILE_ID";
                     }
                     return null;
@@ -163,8 +163,9 @@ class _TestimonialFormPageState extends State<TestimonialFormPage> {
                   padding: const EdgeInsets.all(8.0),
                   child: ElevatedButton(
                     style: ButtonStyle(
-                      backgroundColor:
-                          WidgetStateProperty.all(Theme.of(context).colorScheme.secondary),
+                      backgroundColor: WidgetStateProperty.all(
+                        Theme.of(context).colorScheme.secondary,
+                      ),
                     ),
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {
@@ -172,13 +173,19 @@ class _TestimonialFormPageState extends State<TestimonialFormPage> {
                           context: context,
                           builder: (context) {
                             return AlertDialog(
-                              title: const Text('Testimonial berhasil ditambahkan!'),
+                              title: const Text(
+                                'Testimonial berhasil ditambahkan!',
+                              ),
                               content: SingleChildScrollView(
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text('Pengalaman Terkait: $_relatedExperience'),
-                                    Text('Pesan Testimonial: $_testimonialMessage'),
+                                    Text(
+                                      'Pengalaman Terkait: $_relatedExperience',
+                                    ),
+                                    Text(
+                                      'Pesan Testimonial: $_testimonialMessage',
+                                    ),
                                     Text('Pengirim: $_senderName'),
                                     Text('Tautan Gambar: $_testimonialLink'),
                                   ],
